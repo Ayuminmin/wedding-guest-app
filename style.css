@@ -1,0 +1,225 @@
+:root {
+  --color-outer-bg: #ECE6DA;   /* PC表示時の外側背景（グレージュ） */
+  --color-ivory: #FAF6EE;      /* アプリ本体の背景（アイボリー） */
+  --color-white: #FFFFFF;
+  --color-text: #4A4238;       /* 本文の濃いグレージュブラウン */
+  --color-text-soft: #8C8275;  /* 補助テキスト */
+  --color-green: #DCE7CE;      /* 淡いグリーン（アクセント） */
+  --color-green-dark: #8FAE79;
+  --color-gold: #C6A15B;       /* ゴールド（少量アクセント） */
+  --color-border: #E3DACB;
+  --color-error-bg: #F5ECE6;
+  --color-error-text: #A17F6E;
+
+  --font-en: "Times New Roman", "Times", Georgia, serif;
+  --font-jp: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  --font-jp-ui: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--color-outer-bg);
+  font-family: var(--font-jp-ui);
+  color: var(--color-text);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--color-ivory);
+  padding: 48px 28px 56px;
+  position: relative;
+}
+
+/* PC等、430pxより広い画面ではスマホ風レイアウトとして中央に浮かせる */
+@media (min-width: 431px) {
+  html, body {
+    min-height: 100vh;
+  }
+  body {
+    align-items: center;
+    padding: 32px 0;
+  }
+  .app {
+    min-height: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(74, 66, 56, 0.18);
+    border-radius: 18px;
+  }
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---------- 入力画面 ---------- */
+
+.title-en {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  color: var(--color-text);
+  margin: 12px 0 18px;
+}
+
+.description {
+  font-family: var(--font-jp);
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--color-text-soft);
+  margin: 0 0 36px;
+}
+
+#guest-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  width: 100%;
+  text-align: left;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-family: var(--font-jp-ui);
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(198, 161, 91, 0.18);
+}
+
+.open-btn {
+  margin-top: 12px;
+  width: 100%;
+  height: 54px;
+  font-size: 16px;
+  font-family: var(--font-jp-ui);
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  background: var(--color-green-dark);
+  border: none;
+  border-radius: 27px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.open-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.error-message {
+  margin-top: 24px;
+  padding: 16px 18px;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+  border-radius: 10px;
+}
+
+/* ---------- メッセージ画面 ---------- */
+
+#message-screen {
+  width: 100%;
+}
+
+.letter-card {
+  width: 100%;
+  background: var(--color-white);
+  border-radius: 6px;
+  padding: 44px 28px 40px;
+  box-shadow: 0 6px 24px rgba(74, 66, 56, 0.10);
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.letter-card.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.dear {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--color-text);
+  margin: 0 0 16px;
+}
+
+.divider {
+  width: 46px;
+  height: 1px;
+  background: var(--color-gold);
+  margin: 0 auto 26px;
+}
+
+.message-body {
+  font-family: var(--font-jp);
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--color-text);
+  white-space: pre-line;
+  text-align: left;
+  margin: 0 0 32px;
+}
+
+.signature {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--color-gold);
+  margin: 0;
+}
+
+@media (max-width: 340px) {
+  .app {
+    padding: 36px 20px 44px;
+  }
+  .title-en {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Message for You</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- 1. トップ・入力画面 -->
+    <section id="input-screen" class="screen">
+      <h1 class="title-en">Message<br>for You</h1>
+      <p class="description">席札に書かれたお名前と<br>合言葉を入力してください</p>
+
+      <form id="guest-form" novalidate>
+        <div class="field">
+          <label for="name">お名前</label>
+          <input type="text" id="name" name="name" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="password">合言葉</label>
+          <input type="text" id="password" name="password" autocomplete="off" required>
+        </div>
+        <button type="submit" class="open-btn">お手紙をひらく</button>
+      </form>
+
+      <p id="error-message" class="error-message" hidden>
+        お名前または合言葉が違うようです。<br>席札をもう一度確認してみてください。
+      </p>
+    </section>
+
+    <!-- 2. メッセージ表示画面 -->
+    <section id="message-screen" class="screen" hidden>
+      <div class="letter-card" id="letter-card">
+        <p class="dear" id="dear-text"></p>
+        <div class="divider" aria-hidden="true"></div>
+        <p class="message-body" id="message-body"></p>
+        <p class="signature" id="signature-text"></p>
+      </div>
+    </section>
+
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
