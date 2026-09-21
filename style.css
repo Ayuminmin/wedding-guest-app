@@ -132,7 +132,8 @@ body {
 }
 
 .open-btn {
-  margin-top: 12px;
+  margin-top: 22px;
+  margin-bottom: 6px;
   width: 100%;
   height: 54px;
   font-size: 16px;
@@ -172,7 +173,7 @@ body {
   width: 100%;
   background: var(--color-white);
   border-radius: 6px;
-  padding: 44px 28px 40px;
+  padding: 40px 28px 40px;
   box-shadow: 0 6px 24px rgba(80, 57, 47, 0.12);
   opacity: 0;
   transform: translateY(18px) scale(0.98);
@@ -184,19 +185,12 @@ body {
   transform: translateY(0) scale(1);
 }
 
-.dear {
-  font-family: var(--font-en);
-  font-style: italic;
-  font-size: 22px;
-  color: var(--color-bordeaux);
-  margin: 0 0 16px;
-}
 
 .divider {
   width: 46px;
   height: 1px;
   background: var(--color-green-dark);
-  margin: 0 auto 26px;
+  margin: 0 auto 28px;
 }
 
 .message-body {
@@ -209,13 +203,6 @@ body {
   margin: 0 0 32px;
 }
 
-.signature {
-  font-family: var(--font-en);
-  font-style: italic;
-  font-size: 18px;
-  color: var(--color-green-dark);
-  margin: 0;
-}
 
 @media (max-width: 340px) {
   .app {

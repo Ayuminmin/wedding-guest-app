@@ -1,6 +1,3 @@
-// 新郎新婦の署名（お手紙の最後に表示）。ここを書き換えてください。
-const COUPLE_SIGNATURE = "Ayumi & ○○";
-
 const inputScreen = document.getElementById("input-screen");
 const messageScreen = document.getElementById("message-screen");
 const form = document.getElementById("guest-form");
@@ -8,9 +5,7 @@ const nameInput = document.getElementById("name");
 const passwordInput = document.getElementById("password");
 const errorMessage = document.getElementById("error-message");
 const letterCard = document.getElementById("letter-card");
-const dearText = document.getElementById("dear-text");
 const messageBody = document.getElementById("message-body");
-const signatureText = document.getElementById("signature-text");
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -60,9 +55,7 @@ function showError() {
 }
 
 function showMessage(guest) {
-  dearText.textContent = `Dear ${guest.name}`;
   messageBody.textContent = guest.message;
-  signatureText.textContent = COUPLE_SIGNATURE;
 
   inputScreen.hidden = true;
   messageScreen.hidden = false;
