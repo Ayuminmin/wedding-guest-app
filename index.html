@@ -9,100 +9,40 @@
 <body>
   <div class="app">
 
-    <section id="input-screen" class="screen input-screen">
-      <div class="hero-art" aria-hidden="true">
+    <!-- 1. トップ・入力画面 -->
+    <section id="input-screen" class="screen">
+      <h1 class="title-en">Message<br>for You</h1>
+      <p class="description">席札に書かれたお名前と<br>合言葉を入力してください</p>
 
-
-        <svg class="hero-cake" viewBox="0 0 150 132">
-          <ellipse cx="75" cy="116" rx="52" ry="9" fill="#c7b69b" opacity=".6"/>
-          <rect x="42" y="67" width="66" height="39" rx="7" fill="#fff8eb" stroke="#8D001D" stroke-width="2"/>
-          <path d="M42 81 C53 73 64 89 75 81 C86 73 97 89 108 81" fill="none" stroke="#8D001D" stroke-width="2.5"/>
-          <path d="M49 67 C52 56 63 53 75 53 C87 53 98 56 101 67" fill="#f7ead7" stroke="#8D001D" stroke-width="2"/>
-          <circle cx="61" cy="49" r="10" fill="#8D001D"/>
-          <circle cx="75" cy="43" r="11" fill="#a61530"/>
-          <circle cx="89" cy="49" r="10" fill="#8D001D"/>
-          <path d="M58 40 l3 -8 l3 8 M72 33 l3 -9 l3 9 M86 40 l3 -8 l3 8" stroke="#759488" stroke-width="3" stroke-linecap="round"/>
-          <path d="M29 106 H121" stroke="#8D001D" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-
-      <h1 class="title-en">Message for You</h1>
-      <div class="ornament-line" aria-hidden="true"><span>✦</span></div>
-      <p class="description">席札に書かれた<br>お名前と合言葉を入力してください</p>
-
-      <div class="form-decoration-area">
-        <form id="guest-form" novalidate>
-          <div class="field">
-            <label for="name">お名前</label>
-            <div class="input-wrap">
-              <span class="field-icon" aria-hidden="true">○</span>
-              <input type="text" id="name" name="name" autocomplete="off" placeholder="お名前を入力" required>
-            </div>
-          </div>
-          <div class="field">
-            <label for="password">合言葉</label>
-            <div class="input-wrap">
-              <span class="field-icon key-icon" aria-hidden="true">⌁</span>
-              <input type="text" id="password" name="password" autocomplete="off" placeholder="合言葉を入力" required>
-            </div>
-          </div>
-          <button type="submit" class="open-btn">
-            お手紙をひらく
-            <span class="arrow" aria-hidden="true">›</span>
-          </button>
-        </form>
-
-        <svg class="santa santa-floating" viewBox="0 0 120 140" aria-hidden="true">
-          <circle cx="58" cy="50" r="26" fill="#f2cfb1"/>
-          <path d="M32 48 C34 20 46 10 67 15 C80 18 89 29 88 48 Z" fill="#8D001D"/>
-          <circle cx="84" cy="26" r="8" fill="#fff8eb"/>
-          <path d="M40 55 C36 73 43 91 58 95 C74 91 82 74 78 55 C73 62 66 66 58 66 C50 66 45 62 40 55 Z" fill="#fff8eb"/>
-          <circle cx="49" cy="49" r="2.5" fill="#3e322c"/><circle cx="67" cy="49" r="2.5" fill="#3e322c"/>
-          <path d="M52 58 C56 61 60 61 64 58" fill="none" stroke="#8D001D" stroke-width="2" stroke-linecap="round"/>
-          <path d="M35 92 C25 100 22 117 26 130 H91 C95 114 90 100 79 92 C70 100 45 100 35 92 Z" fill="#8D001D"/>
-          <rect x="24" y="112" width="70" height="8" rx="4" fill="#759488"/>
-          <circle cx="58" cy="106" r="4" fill="#E2DBBD"/><circle cx="58" cy="122" r="4" fill="#E2DBBD"/>
-        </svg>
-      </div>
+      <form id="guest-form" novalidate>
+        <div class="field">
+          <label for="name">お名前</label>
+          <input type="text" id="name" name="name" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="password">合言葉</label>
+          <input type="text" id="password" name="password" autocomplete="off" required>
+        </div>
+        <button type="submit" class="open-btn">お手紙をひらく</button>
+      </form>
 
       <p id="error-message" class="error-message" hidden>
         お名前または合言葉が違うようです。<br>席札をもう一度確認してみてください。
       </p>
-
-      <div class="little-letter-area" aria-hidden="true">
-        <div class="little-note">
-          <p>A little letter,<br>just for you.</p>
-          <svg class="envelope-drawing" viewBox="0 0 120 84">
-            <rect x="10" y="14" width="100" height="60" rx="6" fill="#f9f1df" stroke="#8D001D" stroke-width="2"/>
-            <path d="M12 18 L60 52 L108 18" fill="none" stroke="#8D001D" stroke-width="2"/>
-            <circle cx="60" cy="52" r="9" fill="#8D001D"/>
-            <path d="M56 51 h8" stroke="#E2DBBD" stroke-width="2"/>
-          </svg>
-        </div>
-      </div>
     </section>
 
-    <section id="message-screen" class="screen message-screen" hidden>
-
+    <!-- 2. メッセージ表示画面 -->
+    <section id="message-screen" class="screen" hidden>
       <div class="letter-card" id="letter-card">
-        <div class="letter-top-row">
-          <p class="dear" id="dear-text"></p>
-          <svg class="mini-cake" viewBox="0 0 80 70" aria-hidden="true">
-            <rect x="20" y="35" width="42" height="24" rx="5" fill="#fff8eb" stroke="#8D001D" stroke-width="1.7"/>
-            <path d="M20 44 C27 39 34 49 41 44 C48 39 55 49 62 44" fill="none" stroke="#8D001D" stroke-width="1.7"/>
-            <circle cx="34" cy="30" r="7" fill="#8D001D"/><circle cx="47" cy="26" r="8" fill="#a61530"/>
-            <path d="M31 23 l3 -6 l3 6 M44 19 l3 -7 l3 7" stroke="#759488" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="divider" aria-hidden="true"><span>✦</span></div>
+        <p class="dear" id="dear-text"></p>
+        <div class="divider" aria-hidden="true"></div>
         <p class="message-body" id="message-body"></p>
-        <p class="thanks-script">Thank you<br>for coming!</p>
         <p class="signature" id="signature-text"></p>
-        <div class="seal" aria-hidden="true">A</div>
       </div>
     </section>
 
   </div>
+
 <script src="script.js"></script>
 </body>
 </html>

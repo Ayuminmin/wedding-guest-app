@@ -1,302 +1,228 @@
 :root {
-  --beige: #E2DBBD;
-  --beige-deep: #cbbf96;
-  --paper: #FFF9EC;
-  --bordeaux: #8D001D;
-  --bordeaux-deep: #650016;
-  --emerald: #759488;
-  --text: #46362f;
-  --soft: #75675f;
-  --line: rgba(141, 0, 29, .32);
-  --shadow: rgba(83, 55, 44, .18);
-  --font-en: Georgia, "Times New Roman", serif;
-  --font-jp: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif;
-  --font-ui: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --color-outer-bg: #CFC6A4;   /* レザーベージュを少し深くした外側背景 */
+  --color-ivory: #E2DBBD;      /* メイン：レザーベージュ */
+  --color-white: #F8F3E7;      /* 便箋カード用のやわらかいアイボリー */
+  --color-text: #3F302C;       /* 本文の濃いブラウン */
+  --color-text-soft: #6F625A;  /* 補助テキスト */
+  --color-green: #D8E1DD;      /* クリーミーエメラルドの淡色 */
+  --color-green-dark: #759488; /* 差し色：クリーミーエメラルド */
+  --color-bordeaux: #8D001D;   /* 準メイン：レトロボルドー */
+  --color-border: #BDAF92;
+  --color-error-bg: #F2E5E3;
+  --color-error-text: #8D001D;
+
+  --font-en: "Times New Roman", "Times", Georgia, serif;
+  --font-jp: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  --font-jp-ui: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
 }
 
-* { box-sizing: border-box; }
-html, body { margin:0; min-height:100%; background:#cfc6a4; color:var(--text); }
-body { display:flex; justify-content:center; font-family:var(--font-ui); }
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--color-outer-bg);
+  font-family: var(--font-jp-ui);
+  color: var(--color-text);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
 
 .app {
-  width:100%; max-width:430px; min-height:100vh; position:relative; overflow:hidden;
-  background:
-    radial-gradient(circle at 20% 15%, rgba(255,255,255,.26), transparent 28%),
-    radial-gradient(circle at 80% 85%, rgba(117,148,136,.09), transparent 28%),
-    var(--beige);
-  padding:28px 24px 42px;
-}
-
-.app::before {
-  content:""; position:absolute; inset:10px; border:1px solid rgba(101,0,22,.22); border-radius:24px; pointer-events:none;
-}
-
-@media (min-width:431px){
-  body{align-items:center; padding:28px 0;}
-  .app{min-height:760px; max-height:92vh; overflow-y:auto; border-radius:28px; box-shadow:0 16px 46px var(--shadow);}
-}
-
-.screen{position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; text-align:center;}
-
-.hero-art{width:100%; height:164px; position:relative; margin-top:8px;}
-.hero-ribbon{position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:224px; color:var(--bordeaux);}
-.hero-cake{position:absolute; width:112px; left:50%; bottom:0; transform:translateX(-50%); filter:drop-shadow(0 5px 5px rgba(73,49,39,.08));}
-.sprig{position:absolute; width:72px; bottom:9px;}
-.sprig.left{left:4px; transform:rotate(-8deg)}
-.sprig.right{right:4px; transform:scaleX(-1) rotate(-8deg)}
-
-.eyebrow{margin:8px 0 3px; font-family:var(--font-en); font-size:11px; letter-spacing:.28em; color:var(--text);}
-.title-en{font-family:var(--font-en); font-style:italic; font-weight:400; font-size:48px; line-height:1.05; color:var(--bordeaux); margin:0 0 14px;}
-.ornament-line{display:flex; align-items:center; gap:7px; color:var(--bordeaux); font-size:10px; margin-bottom:18px;}
-.ornament-line::before,.ornament-line::after{content:""; width:74px; height:1px; background:var(--bordeaux); opacity:.65;}
-.description{font-family:var(--font-jp); font-size:14px; line-height:1.9; margin:0 0 28px; color:var(--text);}
-
-#guest-form{width:100%; display:flex; flex-direction:column; gap:16px;}
-.field{text-align:left;}
-.field label{display:block; font-size:11px; letter-spacing:.12em; color:var(--soft); margin:0 0 6px 5px;}
-.input-wrap{position:relative;}
-.field-icon{position:absolute; left:17px; top:50%; transform:translateY(-50%); width:18px; height:18px; border:2px solid #a98f61; border-radius:50%; font-size:0;}
-.field-icon::after{content:""; position:absolute; width:12px; height:6px; border:2px solid #a98f61; border-top:0; border-radius:0 0 8px 8px; left:1px; top:14px;}
-.key-icon{border-radius:50%; width:13px; height:13px; left:18px;}
-.key-icon::after{content:""; position:absolute; width:14px; height:2px; background:#a98f61; left:10px; top:8px; border:0; box-shadow:7px 4px 0 -1px #a98f61; transform:rotate(0deg);}
-.field input{width:100%; height:58px; border:1px solid #bda77d; border-radius:10px; background:rgba(255,249,236,.68); padding:0 18px 0 52px; color:var(--text); font-size:16px; font-family:var(--font-ui); outline:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
-.field input::placeholder{color:#978a7f;}
-.field input:focus{border-color:var(--bordeaux); box-shadow:0 0 0 3px rgba(141,0,29,.10);}
-
-.open-btn{position:relative; width:100%; height:62px; margin-top:6px; border:1px solid #5f0014; border-radius:31px; background:linear-gradient(#97142e,#7f001a); color:#fff8e8; font-family:var(--font-jp); font-size:16px; letter-spacing:.08em; cursor:pointer; box-shadow:0 3px 0 var(--bordeaux-deep), inset 0 0 0 3px rgba(226,219,189,.25);}
-.open-btn:active{transform:translateY(2px); box-shadow:0 1px 0 var(--bordeaux-deep), inset 0 0 0 3px rgba(226,219,189,.25);}
-.envelope-icon{font-size:20px; margin-right:10px}.arrow{position:absolute; right:23px; font-size:28px; top:13px; font-family:Arial,sans-serif; font-weight:200;}
-
-.error-message{width:100%; margin:18px 0 0; padding:14px 16px; background:rgba(255,249,236,.66); border:1px solid rgba(141,0,29,.22); border-radius:10px; color:var(--bordeaux); font-size:13px; line-height:1.7;}
-
-.bottom-illustration{width:100%; margin-top:26px; min-height:130px; display:flex; align-items:flex-end; justify-content:space-between; padding:0 9px;}
-.santa{width:92px; filter:drop-shadow(0 5px 4px rgba(73,49,39,.08));}
-.little-note{display:flex; align-items:center; gap:4px; color:var(--emerald);}
-.little-note p{font-family:var(--font-en); font-style:italic; font-size:17px; line-height:1.35; text-align:right; margin:0;}
-.envelope-drawing{width:88px; transform:rotate(-8deg);}
-
-.message-screen{padding-top:14px;}
-.back-btn{align-self:flex-start; border:0; background:transparent; color:var(--bordeaux); font-family:var(--font-jp); font-size:14px; padding:8px 2px; cursor:pointer;}
-.message-sprig{position:absolute; right:-6px; top:2px; width:92px;}
-.letter-card{position:relative; width:100%; margin-top:20px; background:var(--paper); border:1px solid rgba(141,0,29,.08); border-radius:8px; padding:34px 26px 42px; box-shadow:0 10px 26px rgba(83,55,44,.14); opacity:0; transform:translateY(18px) scale(.98); transition:opacity .7s ease, transform .7s ease; text-align:left;}
-.letter-card::before{content:""; position:absolute; inset:7px; border:1px solid rgba(117,148,136,.18); border-radius:5px; pointer-events:none;}
-.letter-card.show{opacity:1; transform:translateY(0) scale(1);}
-.letter-top-row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
-.dear{font-family:var(--font-en); font-style:italic; font-size:28px; color:var(--bordeaux); margin:0; padding-top:8px;}
-.mini-cake{width:68px; flex:0 0 auto;}
-.divider{display:flex; align-items:center; gap:8px; width:100%; margin:12px 0 24px; color:var(--emerald); font-size:8px;}
-.divider::before,.divider::after{content:""; flex:1; height:1px; background:var(--emerald); opacity:.8;}
-.message-body{font-family:var(--font-jp); font-size:15px; line-height:2.05; white-space:pre-line; color:var(--text); margin:0 0 30px;}
-.thanks-script{position:absolute; right:24px; top:86px; font-family:var(--font-en); font-style:italic; font-size:15px; color:var(--emerald); line-height:1.2; transform:rotate(-5deg); text-align:center; opacity:.9;}
-.signature{font-family:var(--font-en); font-style:italic; font-size:22px; color:var(--emerald); text-align:right; margin:0 18px 0 0;}
-.seal{position:absolute; right:18px; bottom:-18px; width:50px; height:50px; display:grid; place-items:center; border-radius:50%; background:radial-gradient(circle at 35% 30%, #a4263f, var(--bordeaux) 70%); border:3px double #6b0017; color:#d8c68d; font-family:var(--font-en); font-style:italic; font-size:24px; box-shadow:0 5px 10px rgba(67,0,13,.25);}
-.message-footer{display:flex; align-items:center; gap:14px; color:var(--bordeaux); margin-top:46px;}
-.message-footer span{font-size:9px;}.message-footer p{margin:0; font-family:var(--font-jp); font-size:12px; line-height:1.8; color:var(--text);}
-
-@media (max-width:350px){
-  .app{padding-left:18px; padding-right:18px;}
-  .title-en{font-size:42px;}
-  .hero-ribbon{width:200px;}.sprig{width:64px;}.hero-cake{width:104px;}
-  .little-note p{font-size:15px;}.envelope-drawing{width:74px;}.santa{width:80px;}
-}
-
-/* ===== Compact input layout: lower decorations do not create dead space ===== */
-.input-screen {
   width: 100%;
-  padding-bottom: 0;
-}
-
-.form-decoration-area {
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--color-ivory);
+  padding: 48px 28px 56px;
   position: relative;
-  width: 100%;
 }
 
-.form-decoration-area #guest-form {
-  position: relative;
-  z-index: 2;
+/* PC等、430pxより広い画面ではスマホ風レイアウトとして中央に浮かせる */
+@media (min-width: 431px) {
+  html, body {
+    min-height: 100vh;
+  }
+
+  body {
+    align-items: center;
+    padding: 32px 0;
+  }
+
+  .app {
+    min-height: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 40px rgba(80, 57, 47, 0.18);
+    border-radius: 18px;
+  }
 }
 
-.santa-floating {
-  position: absolute;
-  z-index: 3;
-  width: 76px;
-  right: -12px;
-  bottom: -22px;
-  margin: 0;
-  pointer-events: none;
-  filter: drop-shadow(0 5px 4px rgba(73,49,39,.08));
-}
-
-.little-letter-area {
-  width: 100%;
+.screen {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin: 12px 0 0;
-  padding: 0 58px 0 2px;
-  min-height: 66px;
+  text-align: center;
 }
 
-.mini-sprig {
-  width: 58px;
-  height: auto;
-  flex: 0 0 auto;
-  margin-left: -8px;
-  transform: rotate(-7deg);
-}
+/* ---------- 入力画面 ---------- */
 
-.little-letter-area .little-note {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  margin: 0;
-  color: var(--emerald);
-}
-
-.little-letter-area .little-note p {
-  margin: 0;
+.title-en {
   font-family: var(--font-en);
   font-style: italic;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  color: var(--color-bordeaux);
+  margin: 12px 0 18px;
+}
+
+.description {
+  font-family: var(--font-jp);
   font-size: 14px;
-  line-height: 1.25;
-  text-align: right;
-  white-space: nowrap;
+  line-height: 1.9;
+  color: var(--color-text-soft);
+  margin: 0 0 36px;
 }
 
-.little-letter-area .envelope-drawing {
-  width: 66px;
-  height: auto;
-  transform: rotate(-7deg);
+#guest-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* The old bottom block is intentionally unused in the compact version. */
-.bottom-illustration { display: none; }
-
-/* Trim the app's bottom breathing room without touching the frame. */
-.app {
-  padding-bottom: 18px;
+.field {
+  width: 100%;
+  text-align: left;
 }
 
-@media (max-width: 350px) {
-  .santa-floating {
-    width: 68px;
-    right: -10px;
-    bottom: -18px;
-  }
-
-  .little-letter-area {
-    margin-top: 10px;
-    min-height: 60px;
-    padding-right: 50px;
-  }
-
-  .mini-sprig { width: 50px; }
-  .little-letter-area .little-note p { font-size: 12.5px; }
-  .little-letter-area .envelope-drawing { width: 58px; }
+.field label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
 }
 
-
-/* ===== Requested cleanup + letter reveal animation ===== */
-.hero-ribbon, .eyebrow, .envelope-icon { display: none !important; }
-
-/* A soft lift-in when the personal letter opens. */
-@keyframes letterLiftIn {
-  0% { opacity: 0; transform: translateY(30px) scale(.975); }
-  62% { opacity: 1; transform: translateY(-4px) scale(1.006); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-.letter-card.show {
-  animation: letterLiftIn .78s cubic-bezier(.22,1,.36,1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .letter-card.show { animation: none; opacity: 1; transform: none; }
+.field input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-family: var(--font-jp-ui);
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-
-/* ===== Cake + Santa + Letter only ===== */
-.sprig,
-.mini-sprig,
-.message-sprig,
-.hero-ribbon,
-.eyebrow,
-.envelope-icon {
-  display: none !important;
+.field input:focus {
+  border-color: var(--color-bordeaux);
+  box-shadow: 0 0 0 3px rgba(141, 0, 29, 0.12);
 }
 
-.hero-art {
-  height: 138px;
-  margin-top: 10px;
+.open-btn {
+  margin-top: 12px;
+  width: 100%;
+  height: 54px;
+  font-size: 16px;
+  font-family: var(--font-jp-ui);
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  background: var(--color-bordeaux);
+  border: none;
+  border-radius: 27px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
-.hero-cake {
-  width: 116px;
-  bottom: 2px;
+.open-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
 }
 
-.little-letter-area {
-  justify-content: center;
-  gap: 8px;
-  margin: 12px 0 0;
-  padding: 0 58px 0 0;
-  min-height: 60px;
+.error-message {
+  margin-top: 24px;
+  padding: 16px 18px;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+  border-radius: 10px;
 }
 
-.little-letter-area .little-note {
-  gap: 6px;
-}
+/* ---------- メッセージ画面 ---------- */
 
-.little-letter-area .little-note p {
-  font-size: 14px;
-}
-
-.little-letter-area .envelope-drawing {
-  width: 70px;
-  transform: rotate(-6deg);
-}
-
-.message-screen {
-  padding-top: 10px;
+#message-screen {
+  width: 100%;
 }
 
 .letter-card {
-  margin-top: 14px;
+  width: 100%;
+  background: var(--color-white);
+  border-radius: 6px;
+  padding: 44px 28px 40px;
+  box-shadow: 0 6px 24px rgba(80, 57, 47, 0.12);
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-@media (max-width: 350px) {
-  .hero-art { height: 126px; }
-  .hero-cake { width: 104px; }
-  .little-letter-area {
-    min-height: 56px;
-    padding-right: 52px;
-  }
-  .little-letter-area .envelope-drawing { width: 62px; }
+.letter-card.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-
-/* ===== Tight message screen: no back button / no footer / no dead space ===== */
-.back-btn,
-.message-footer {
-  display: none !important;
+.dear {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--color-bordeaux);
+  margin: 0 0 16px;
 }
 
-.message-screen {
-  padding-top: 0;
-  padding-bottom: 0;
+.divider {
+  width: 46px;
+  height: 1px;
+  background: var(--color-green-dark);
+  margin: 0 auto 26px;
 }
 
-.message-screen .letter-card {
-  margin-top: 4px;
-  margin-bottom: 0;
+.message-body {
+  font-family: var(--font-jp);
+  font-size: 15px;
+  line-height: 2.1;
+  color: var(--color-text);
+  white-space: pre-line;
+  text-align: left;
+  margin: 0 0 32px;
 }
 
-.app {
-  padding-bottom: 12px;
+.signature {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--color-green-dark);
+  margin: 0;
 }
 
-@media (min-width: 431px) {
+@media (max-width: 340px) {
   .app {
-    min-height: auto;
+    padding: 36px 20px 44px;
+  }
+
+  .title-en {
+    font-size: 28px;
   }
 }
