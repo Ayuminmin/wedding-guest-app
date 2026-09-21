@@ -1,7 +1,7 @@
 :root {
-  --color-outer-bg: #CFC6A4;   /* レザーベージュを少し深くした外側背景 */
-  --color-ivory: #E2DBBD;      /* メイン：レザーベージュ */
-  --color-white: #F8F3E7;      /* 便箋カード用のやわらかいアイボリー */
+  --color-outer-bg: #FFFF;   /* レザーベージュを少し深くした外側背景 */
+  --color-ivory: #FFFF;      /* メイン：レザーベージュ */
+  --color-white: #FFFF;      /* 便箋カード用のやわらかいアイボリー */
   --color-text: #3F302C;       /* 本文の濃いブラウン */
   --color-text-soft: #6F625A;  /* 補助テキスト */
   --color-green: #D8E1DD;      /* クリーミーエメラルドの淡色 */
@@ -133,7 +133,7 @@ body {
 
 .open-btn {
   margin-top: 22px;
-  margin-bottom: 6px;
+  margin-bottom: 22px;
   width: 100%;
   height: 54px;
   font-size: 16px;
@@ -171,7 +171,7 @@ body {
 
 .letter-card {
   width: 100%;
-  background: var(--color-white);
+  background: #759488;
   border-radius: 6px;
   padding: 40px 28px 40px;
   box-shadow: 0 6px 24px rgba(80, 57, 47, 0.12);
@@ -197,10 +197,45 @@ body {
   font-family: var(--font-jp);
   font-size: 15px;
   line-height: 2.1;
-  color: var(--color-text);
+  color: #FFFF;
   white-space: pre-line;
   text-align: left;
   margin: 0 0 32px;
+  padding-bottom: 95px;
+}
+
+.top-illustration {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 18px;
+}
+
+.wedding-illustration {
+  display: block;
+  width: 120px;
+  height: auto;
+  max-width: 40%;
+  object-fit: contain;
+}
+
+
+.letter-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-flower {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 150px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.96;
 }
 
 
@@ -213,3 +248,5 @@ body {
     font-size: 28px;
   }
 }
+
+
