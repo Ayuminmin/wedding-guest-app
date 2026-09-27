@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Message for You</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <section id="input-screen" class="screen">
+      <div class="top-illustration" aria-hidden="true">
+        <img src="./images/wedding.svg" alt="" class="wedding-illustration">
+      </div>
+      <h1 class="title-en">Message<br>for You</h1>
+      <p class="description">席札に書かれたお名前と<br>合言葉を入力してください</p>
+
+      <form id="guest-form" novalidate>
+        <div class="field">
+          <label for="name">お名前</label>
+          <input type="text" id="name" name="name" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="password">合言葉</label>
+          <input type="text" id="password" name="password" autocomplete="off" required>
+        </div>
+        <button type="submit" class="open-btn">お手紙をひらく</button>
+      </form>
+
+      <p id="error-message" class="error-message" role="status" aria-live="polite" hidden>
+        お名前または合言葉が違うようです。<br>席札をもう一度確認してみてください。
+      </p>
+
+      <div class="letter-card" id="letter-card" hidden>
+        <div class="divider" aria-hidden="true"></div>
+        <p class="message-body" id="message-body"></p>
+        <img src="./images/flower.svg" alt="" class="letter-flower" aria-hidden="true">
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const form = document.querySelector("#guest-form");
+    const nameInput = document.querySelector("#name");
+    const keywordInput = document.querySelector("#password");
+    const errorMessage = document.querySelector("#error-message");
+    const letterCard = document.querySelector("#letter-card");
+    const messageBody = document.querySelector("#message-body");
+    const openButton = form.querySelector("button[type='submit']");
+    let encryptedData;
+
+    function decodeBase64(value) {
+      const binary = atob(value);
+      return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    }
+
+    async function loadData() {
+      if (encryptedData) return encryptedData;
+      const response = await fetch("data.json");
+      if (!response.ok) throw new Error("データを読み込めませんでした。");
+      encryptedData = await response.json();
+      return encryptedData;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorMessage.hidden = true;
+      letterCard.hidden = true;
+      letterCard.classList.remove("show");
+      openButton.disabled = true;
+
+      const guestName = nameInput.value.trim();
+      const keyword = keywordInput.value.normalize("NFC");
+
+      try {
+        const data = await loadData();
+        const record = data.users?.[guestName];
+        if (!record) {
+          showError();
+          return;
+        }
+
+        const material = await crypto.subtle.importKey(
+          "raw", new TextEncoder().encode(keyword), "PBKDF2", false, ["deriveKey"]
+        );
+        const key = await crypto.subtle.deriveKey(
+          {
+            name: "PBKDF2",
+            salt: decodeBase64(record.salt),
+            iterations: data.iterations || 200000,
+            hash: "SHA-256"
+          },
+          material,
+          { name: "AES-GCM", length: 256 },
+          false,
+          ["decrypt"]
+        );
+        const plaintext = await crypto.subtle.decrypt(
+          { name: "AES-GCM", iv: decodeBase64(record.nonce) },
+          key,
+          decodeBase64(record.ciphertext)
+        );
+        messageBody.textContent = new TextDecoder().decode(plaintext);
+        letterCard.hidden = false;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            letterCard.classList.add("show");
+            letterCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
+        });
+      } catch (error) {
+        showError();
+      } finally {
+        openButton.disabled = false;
+      }
+    });
+
+    function showError() {
+      errorMessage.hidden = false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "iterations": 200000,
+  "users": {
+    "ゆき": {
+      "salt": "OoPRA7bBgxz5hciSuGnK4g==",
+      "nonce": "6RiUeZy/PI8wBdX+",
+      "ciphertext": "JvK3oroWpm6Yi09pSs8q9NB77BcswiZjgkt0oXqnV+s="
+    },
+    "かな": {
+      "salt": "8QZlU0g3aiOSn5clTtb0Ig==",
+      "nonce": "PXbc4S4UJ5acu4DC",
+      "ciphertext": "KjBCuvZCSiHv+9oaIJdcV6030L5pGVpW7ZygTxkf/nzkZA=="
+    }
+  }
+}

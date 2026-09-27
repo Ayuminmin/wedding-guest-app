@@ -1,71 +1,48 @@
-# Message for You（結婚式ゲスト向けWebアプリ）
+# Message for You
 
-ゲストが名前と合言葉を入力すると、その人専用のメッセージが表示される、GitHub Pagesで公開できる静的Webアプリです。
+平文メッセージとキーワードをローカルに保管し、AES-GCMで暗号化した `public/data.json` だけを静的ホスティングへ配置します。
 
-## ファイル構成
-
-```text
-/
-├── index.html    画面のHTML（入力画面／メッセージ画面）
-├── style.css     デザイン（アイボリー・グレージュ・淡いグリーン・ゴールドの上品な配色）
-├── script.js     認証処理・画面切り替え・アニメーションのロジック
-├── guests.json   ゲスト情報（名前・合言葉・メッセージ）
-└── README.md     このファイル
-```
-
-## ローカルで確認する方法
-
-`index.html` を直接ブラウザで開くだけだと、ブラウザによっては `guests.json` の読み込みがブロックされます（`fetch` はローカルサーバー経由での配信を前提としているため）。
-
-このフォルダで簡易サーバーを立てて確認してください。
+## セットアップ
 
 ```bash
-# Python3がある場合
-cd wedding-guest-app
-python3 -m http.server 8000
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp keywords.example.json keywords.json
 ```
 
-ブラウザで `http://localhost:8000` を開いて確認してください。
-
-## `guests.json` にゲストを追加する方法
-
-`guests.json` に、以下の形式でオブジェクトを追加してください（末尾のカンマ忘れに注意してください）。
+`keywords.json` の例を実際のゲスト名と、ゲストに個別に伝える長いキーワードへ置き換えます。メッセージはGit管理されない `data_plain.json` に記入します。
 
 ```json
 {
-  "name": "ゲストのお名前",
-  "password": "合言葉",
-  "message": "メッセージ本文。\n改行したい場所には \\n を入れてください。"
+  "alice": "Thank you for coming!",
+  "bob": "I love you"
 }
 ```
 
-- `name`：席札に記載する名前と完全に一致させてください（前後の空白は自動で無視されます）
-- `password`：合言葉です。大文字・小文字は区別されません
-- `message`：本文中に `\n` を入れると、その場所で改行して表示されます
+全員共通のメッセージなら `{ "message": "Thank you for coming!" }` と書けます。`data_plain.json` のキーと `keywords.json` のキーを一致させてください。`keywords.json` はJSONの前に `#` から始まるコメント行を置けます。
 
-約90人分になる場合も、同じ形式でオブジェクトを配列に追加していくだけで対応できます。
+## 暗号化と確認
 
-## GitHub Pagesで公開する方法
-
-1. このフォルダの内容をGitHubリポジトリにpushする
-2. リポジトリの `Settings` → `Pages` を開く
-3. `Source` を `Deploy from a branch` にし、公開したいブランチ（例：`main`）と `/ (root)` を選択して保存する
-4. 数分後、`https://<GitHubユーザー名>.github.io/<リポジトリ名>/` でアクセスできるようになる
-
-すべてのファイルを相対パスで読み込むようにしているため、リポジトリ名がURLに含まれる状態でも、CSS・JavaScript・JSONは問題なく読み込まれます。
-
-## QRコードに設定するURLについて
-
-プロフィールブックに掲載するQRコードには、GitHub Pagesで公開されたURLをそのまま設定してください。
-
-```text
-https://<GitHubユーザー名>.github.io/<リポジトリ名>/
+```bash
+python encrypt.py
+python decrypt_local.py
 ```
 
-## メッセージ修正後の反映方法
+暗号化時は `encrypted alice` のように表示され、公開用ファイル `public/data.json` が生成されます。復号テストの結果はローカルの `data_plain_decrypted.json` に書かれます。ページをローカル確認するには、リポジトリのルートでサーバーを起動します。
 
-1. `guests.json` を編集する
-2. 変更をコミットしてpushする
-3. GitHub Pagesは数十秒〜数分程度で自動的に再デプロイされます（反映されるまで少し時間がかかることがあります）
+```bash
+python -m http.server 8000
+```
 
-特別な再公開作業は不要です。
+`http://localhost:8000/public/` を開いてください。公開時は `public/` の中身（`index.html` と生成済み `data.json`）だけを静的ホスティングの公開ルートへ配置します。GitHub PagesではActionsなどで `public/` をデプロイ成果物にしてください。リポジトリ全体をそのまま公開ルートにしないでください。
+
+## セキュリティ
+
+- `keywords.json` はローカル専用です。絶対に公開・コミットしないでください。
+- `data_plain.json` と `data_plain_decrypted.json` もローカル専用です。
+- `salt` と `nonce` は暗号化データごとにランダム生成され、公開して問題ありません。秘密はキーワードです。
+- 推測されにくい、十分に長くランダムなキーワードをゲストごとに設定してください。短い合言葉はオフライン推測の対象になります。
+- ブラウザー内で復号するため、暗号化データやページ自体を改ざんされない配信元を使ってください。
+- PBKDF2は互換性のための採用です。本番用途ではArgon2などの鍵導出方式や、サーバー側で扱う場合のHSM／シークレットストアの導入を検討してください。
+- 以前に公開した平文データや合言葉は、Git履歴やキャッシュに残る可能性があります。旧合言葉を再利用せず、必要なら履歴からの除去と失効対応を行ってください。
